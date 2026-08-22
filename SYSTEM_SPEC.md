@@ -92,6 +92,9 @@ The expected top-level repository structure is approximately:
 ```text
 personal-intelligence/
 ├── SYSTEM_SPEC.md
+├── inbox/
+├── outbox/
+├── raw_data/
 ├── agents/
 │   ├── boss/
 │   └── professor/
@@ -104,7 +107,6 @@ personal-intelligence/
 │   ├── KNOWLEDGE_PROTOCOL.md
 │   ├── WORKER_PROTOCOL.md
 │   ├── sources/
-│   ├── raw/
 │   ├── proposals/
 │   └── wiki/
 └── tooling/
@@ -116,8 +118,13 @@ The semantic responsibilities of the top-level directories are:
 agents/      = WHO performs work and how those actors behave
 research/    = WHAT investigation is underway or was performed
 knowledge/   = WHAT the system currently maintains as knowledge
+raw_data/    = archived original source material, not version-controlled
+inbox/       = material the human owner drops in for the system to use
+outbox/      = system-produced material meant for human consumption
 tooling/     = HOW deterministic structure is checked or compiled
 ```
+
+`raw_data/`, `inbox/`, and `outbox/` sit outside `knowledge/` because none of them are knowledge: `raw_data/` is pre-evidence acquisition material a source record points to, `inbox/` is unprocessed intake, and `outbox/` is a derived export, not the system of record. See `knowledge/KNOWLEDGE_PROTOCOL.md` §2 for `raw_data/`; for `inbox/` and `outbox/`, the triggers are defined in `research/RESEARCH_PROTOCOL.md` §5, §6, and §21, with execution detail in `agents/boss/AGENTS.md` §14 and the ad-hoc synthesis path in `agents/professor/AGENTS.md` §3.D.
 
 These responsibilities SHOULD remain distinct.
 
@@ -197,6 +204,8 @@ Boss is responsible for:
 - reviewing Worker output;
 - managing sources and proposals;
 - performing routine canonical wiki maintenance;
+- triaging `inbox/` material into `raw_data/`, `knowledge/sources/`, or an active research project;
+- writing finished human-facing deliverables to `outbox/`;
 - deciding when further research is needed;
 - recognizing when Professor review is warranted;
 - notifying the human owner when attention is required.
@@ -312,6 +321,8 @@ The intended knowledge flow is:
 ```text
 external source
     ↓
+raw_data/ (optional local archive)
+    ↓
 knowledge/sources/
     ↓
 Worker or Boss interpretation
@@ -322,6 +333,8 @@ Boss review
     ↓
 knowledge/wiki/
 ```
+
+`raw_data/` is optional: a source record can be created directly in `knowledge/sources/` when no local archived copy is necessary.
 
 Professor may review difficult cases, but is not required for the normal path.
 

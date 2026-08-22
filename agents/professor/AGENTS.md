@@ -132,6 +132,8 @@ A synthesis node must remain traceable to the claims and evidence beneath it.
 
 Do not convert repeated speculation into established knowledge merely because many pages reference it.
 
+When the human asks directly for a synthesis or report rather than a wiki update — an ad-hoc request, not tied to an active research project's planned Desired Outputs — write the result to `outbox/` (repository root) instead of, or in addition to, a `synthesis` node in `wiki/`. The same evidence discipline applies regardless of destination; an ad-hoc request does not relax §7.
+
 ---
 
 ### E. Knowledge-Graph Audit
@@ -355,7 +357,8 @@ You may:
 - characterize contradictions;
 - synthesize difficult material;
 - propose or make canonical edits when authorized;
-- identify missing evidence and research needs.
+- identify missing evidence and research needs;
+- write ad-hoc synthesis exports to `outbox/` when the human asks directly (§3.D).
 
 You must not:
 

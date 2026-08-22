@@ -1,9 +1,19 @@
 # Raw archived source material is kept locally only, not versioned —
 # these files can be large (PDFs, HTML dumps, datasets) and add no value
 # to Git history. Source *records* in knowledge/sources/ (markdown
-# metadata: title, URL, author, dates, path into raw/) ARE tracked,
+# metadata: title, URL, author, dates, path into raw_data/) ARE tracked,
 # so provenance stays inspectable even though the raw content does not.
-knowledge/raw/
+raw_data/
+
+# Unprocessed intake dropped in by the human owner. Once Boss triages
+# a file into raw_data/ + knowledge/sources/ (or an active research project),
+# it's tracked there; inbox/ itself is just a local staging area.
+inbox/
+
+# System-produced exports for human consumption (reports, papers).
+# Derived from the canonical wiki, which remains the system of record —
+# see SYSTEM_SPEC.md §22. Not required for provenance, so not versioned.
+outbox/
 
 # OS / editor cruft
 .DS_Store

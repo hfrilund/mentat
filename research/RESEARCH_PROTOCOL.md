@@ -214,6 +214,8 @@ Examples:
 - unresolved-question list;
 - evidence map.
 
+Any of these meant to be read directly by the human, rather than only linked into the wiki, is an export: canonical wiki nodes stay in `knowledge/wiki/`, but a comparison, checklist, memo, or evidence map written up as a standalone document is produced to `outbox/` (repository root) — see §21.
+
 ### Completion Criteria
 
 What must be true before the research can reasonably be considered complete?
@@ -234,6 +236,8 @@ The model should help identify:
 - important subquestions;
 - evidence requirements;
 - potentially dangerous simplifications.
+
+If the human already has material this research needs — something not findable online, or already curated enough that re-researching it would be wasted effort — this planning conversation is the point to hand it over: drop it in `inbox/` (repository root). Once the plan is approved, Boss triages `inbox/` contents the same way any other source is triaged (`knowledge/KNOWLEDGE_PROTOCOL.md` §2) before work packages begin, so it enters the evidence chain rather than sitting outside it.
 
 The resulting plan is saved as `RESEARCH_PLAN.md`.
 
@@ -634,8 +638,9 @@ When a research project is finished or abandoned:
 1. update its final status;
 2. summarize the outcome in `RESEARCH_PLAN.md` or `WORK_PLAN.md`;
 3. ensure important knowledge outputs are linked;
-4. preserve unresolved questions where useful;
-5. move the project directory from `research/active/` to `research/archive/`.
+4. write or update any Desired Outputs meant for direct human consumption to `outbox/` (see §5);
+5. preserve unresolved questions where useful;
+6. move the project directory from `research/active/` to `research/archive/`.
 
 Archived projects remain part of the system's audit history.
 

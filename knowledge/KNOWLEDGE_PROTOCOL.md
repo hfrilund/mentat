@@ -47,38 +47,77 @@ knowledge/
 ├── KNOWLEDGE_PROTOCOL.md
 ├── WORKER_PROTOCOL.md
 ├── sources/
-├── raw/
 ├── proposals/
 └── wiki/
 ```
 
+`raw_data/` (see below) lives at the repository root, as a sibling of `knowledge/`, not inside it — see `SYSTEM_SPEC.md` §3.
+
 ### `sources/`
 
-Contains source records: tracked, version-controlled Markdown describing external evidence — provenance metadata such as title, URL, author, publication and retrieval dates, source type, and, when an original is kept, its path into `raw/`.
+Contains source records: tracked, version-controlled Markdown describing external evidence.
+
+A source record holds two distinct kinds of content. Keep them separate.
+
+**Provenance metadata** — title, URL, author, publication and retrieval dates, source type, and, when an original is kept, its path into `raw_data/`.
+
+**Cited content** — by default, the record also holds the actual passage a claim relies on, not just a pointer to it:
+
+- for text sources, a verbatim excerpt of the specific passage cited — the passage actually referenced, not the whole document;
+- for non-text sources (images, audio, etc.), a literal, low-interpretation transcription or description of what the medium shows — visible text, chart values, what is depicted — explicitly labeled as agent-generated and unverified, since turning an image into words is inherently interpretive in a way copying text verbatim is not.
+
+This is why the abstraction is worth the extra step: `raw_data/` is untracked and can be lost (disk cleanup, migration, `.gitignore`'d by design), but `sources/` is in Git. Copying the cited passage in means the exact thing a claim rests on survives even if the archived original doesn't — a bare URL-plus-metadata record does not offer that.
+
+Cited content is evidence of what the source says, not an interpretation of it. A source record must never explain why the source matters, what it proves, or how it's relevant — that judgment belongs in a proposal or claim that cites the source (see `proposals/` and `wiki/` below), never in the record itself. Blurring this is exactly the epistemic laundering this protocol's own §8 (Source Integrity) and `SYSTEM_SPEC.md` §26 exist to prevent.
+
+A source record may optionally note why it was *included* — e.g. `retrieved_for: WP-04` or `retrieved_for: R-0007`, naming the task or research project that prompted fetching it, mirroring the `derived_from_research` pattern in `research/RESEARCH_PROTOCOL.md` §13. This is acquisition context, not a relevance judgment: it says what prompted archiving the source, never what the source is taken to show. If the note starts explaining what the source demonstrates, it belongs in a proposal instead.
 
 Source records are what canonical claims cite and link to.
 
-### `raw/`
+Example:
 
-Contains the archived original material a source record points to.
+```yaml
+---
+id: S-000052
+source_type: article
+title: "..."
+url: "..."
+author: "..."
+published: 2026-06-01
+retrieved: 2026-08-22
+raw_data: raw_data/S-000052.pdf
+retrieved_for: WP-04
+---
+```
 
-Examples:
+```markdown
+## Cited excerpt
 
-- papers;
-- articles;
-- webpages;
-- interview transcripts;
+> "...the exact passage a claim relies on..."
+```
+
+### `raw_data/`
+
+Root-level, alongside `knowledge/`. Contains the archived original material a source record points to.
+
+Whenever a source exists as a retrievable file — a downloaded PDF, a saved webpage, an image, a dataset export, an API response — archiving it here is the **default**, not an optional extra. A source record alone lets a human trust a citation; the archived file in `raw_data/` lets them independently re-open and re-check it later, even if the live URL changes, is paywalled, or disappears. That is what keeps claims verifiable per `SYSTEM_SPEC.md` §2, so do not skip this step merely because the source record's metadata already looks sufficient.
+
+Skip archiving only when there genuinely is no retrievable file to save — e.g. a live human observation typed up as a note, or a source too large to be practical to mirror locally. In those cases the source record itself is the only durable artifact, and that limitation should be visible (e.g. no `raw_data/` path in the record).
+
+Examples of what belongs here:
+
+- downloaded papers, articles, and other documents (PDF, HTML, etc.);
+- saved copies of webpages;
+- images and screenshots;
 - datasets;
-- documents;
-- API responses;
-- human observations;
-- other archived external material.
+- raw API responses;
+- interview transcripts and other typed-up human observations, when a durable copy exists.
 
-`raw/` is not version-controlled (see `.gitignore`). It can be large, and it is not required for provenance — the source record in `sources/` already preserves the citable metadata. Treat `raw/` as a local cache, not the system of record.
+`raw_data/` is not version-controlled (see `.gitignore`). It can be large. It is not required for provenance in the sense that the source record in `sources/` already preserves the citable metadata — but it is required for independent re-verification, which is the whole point of keeping it. Treat `raw_data/` as a local cache, not the system of record.
 
-A raw file's name should match its source record's ID (e.g. `sources/S-000052.md` ↔ `raw/S-000052.pdf`), so the link between them is discoverable without parsing frontmatter.
+A file in `raw_data/` should be named to match its source record's ID (e.g. `sources/S-000052.md` ↔ `raw_data/S-000052.pdf`), so the link between them is discoverable without parsing frontmatter.
 
-Agent-generated summaries, interpretations, or conclusions are **not sources**, whether in `sources/` or `raw/`.
+Agent-generated summaries, interpretations, or conclusions are **not sources**, whether in `sources/` or `raw_data/`.
 
 ### `proposals/`
 
@@ -169,9 +208,26 @@ Syntheses must distinguish established observations from inference and speculati
 
 ---
 
-## 5. Canonical Node Metadata
+## 5. IDs and Canonical Node Metadata
 
-Canonical wiki nodes should use YAML frontmatter.
+### ID Prefixes
+
+IDs are allocated from one shared registry across the repository, so a prefix always identifies the same kind of thing wherever it's cited — even though only some of these prefixes are canonical wiki nodes.
+
+```text
+E-       entity        (wiki node)
+CON-     concept       (wiki node)
+C-       claim         (wiki node)
+Q-       question      (wiki node)
+SYN-     synthesis     (wiki node)
+S-       source        (source record — not a wiki node; see §2, `sources/`)
+```
+
+IDs should remain stable even if titles or filenames change.
+
+### Canonical Node Frontmatter
+
+Canonical wiki nodes (`E-`, `CON-`, `C-`, `Q-`, `SYN-`) should use YAML frontmatter.
 
 Example:
 
@@ -186,18 +242,7 @@ updated: 2026-08-22
 ---
 ```
 
-Suggested ID prefixes:
-
-```text
-E-       entity
-CON-     concept
-C-       claim
-Q-       question
-SYN-     synthesis
-S-       source
-```
-
-IDs should remain stable even if titles or filenames change.
+Source records (`S-`) are evidence, not wiki nodes — they don't carry `status` or `confidence`. Their frontmatter is shown in §2, `sources/`.
 
 ---
 
@@ -273,8 +318,8 @@ Where practical, source records should preserve:
 - publication or observation date;
 - retrieval date;
 - source type;
-- path to the archived original in `raw/`, when one is kept;
-- relevant page, section, timestamp, or excerpt reference;
+- path to the archived original in `raw_data/` (default whenever a retrievable file exists — see `raw_data/` above);
+- the cited excerpt or transcription itself, plus a page, section, or timestamp locator within the original (see `sources/` above);
 - known commercial or institutional relationship.
 
 A human should be able to use the source record to inspect the original evidence.
@@ -599,16 +644,20 @@ Boss:
 - writes precise worker briefs;
 - organizes and reviews proposals;
 - requests more evidence when needed;
-- decides which issues require Professor review.
+- promotes routine, adequately supported proposals into canonical knowledge;
+- performs routine canonical wiki maintenance;
+- decides which difficult or consequential issues require Professor review.
+
+Boss is the normal day-to-day maintainer of canonical knowledge and does not need Professor approval for routine promotions (`SYSTEM_SPEC.md` §6).
 
 ### Professor
 
 Professor:
 
-- reviews difficult or consequential proposals;
+- reviews difficult or consequential proposals and canonical changes;
 - performs synthesis;
 - resolves or explicitly preserves contradictions;
-- edits the canonical wiki;
+- may edit or recommend edits to the canonical wiki when invoked;
 - identifies conceptual errors and important gaps.
 
 Professor must remain evidence-bound and auditable.

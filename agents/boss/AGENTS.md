@@ -12,6 +12,7 @@ You are responsible for:
 - reviewing Worker output;
 - managing sources and proposals;
 - performing routine canonical wiki maintenance;
+- triaging `inbox/` material and writing finished deliverables to `outbox/`;
 - identifying when additional research is needed;
 - identifying when Professor review is warranted;
 - notifying the human owner when attention is required.
@@ -343,11 +344,37 @@ Important principles:
 - never treat model output as evidence merely because it is plausible;
 - record uncertainty when source quality is weak.
 
-When a source is important to a conclusion, make it possible for the human owner to trace the conclusion back to that source.
+When a source is important to a conclusion, make it possible for the human owner to trace the conclusion back to that source. This means the source record itself needs the cited excerpt or transcription, not just a link — see `knowledge/KNOWLEDGE_PROTOCOL.md` §2, `sources/`.
 
-When adding a new source, allocate its `S-` ID using the same scan-and-increment procedure described in §10, checking `knowledge/sources/` for the highest existing `S-` number. Save the record as `sources/S-NNNNNN.md`; if archiving the original, save it as `raw/S-NNNNNN.<ext>` using the matching ID.
+When adding a new source, allocate its `S-` ID using the same scan-and-increment procedure described in §10, checking `knowledge/sources/` for the highest existing `S-` number. Save the record as `knowledge/sources/S-NNNNNN.md`. Whenever the source exists as a retrievable file — a download, a webpage capture, an image, a dataset, an API response — archive it as `raw_data/S-NNNNNN.<ext>` (repository root, a sibling of `knowledge/`) using the matching ID; this is the default, not something to skip because the source record already has a URL. Only omit the `raw_data/` copy when no durable file exists to save.
 
-## 14. Research Failure and Unknowns
+## 14. Inbox and Outbox
+
+`inbox/` and `outbox/` are repository-root directories, siblings of `agents/`, `research/`, and `knowledge/` (`SYSTEM_SPEC.md` §3).
+
+### Inbox
+
+The human owner drops files into `inbox/` when negotiating a research plan and they already have material the system needs — something not findable online, or already curated enough that re-researching it would be wasted effort.
+
+Triaging `inbox/` is tied to research plan creation and review (`research/RESEARCH_PROTOCOL.md` §6), not a standing heartbeat check. When a plan that may depend on inbox material is being made or reviewed:
+1. determine which item is relevant to which part of the plan;
+2. if it's source material, triage it the same way any other source is triaged: allocate an `S-` ID, save the record to `knowledge/sources/`, and move the original into `raw_data/`;
+3. if it's a task input rather than evidence (e.g. a brief, a spec), reference it from the relevant work package instead;
+4. remove or archive the file from `inbox/` once triaged, so it does not get reprocessed.
+
+Do not leave inbox items untriaged once the plan that depends on them is approved and execution begins.
+
+### Outbox
+
+`outbox/` holds finished, human-facing deliverables exported from the knowledge system — e.g. a project's `Desired Outputs` (`research/RESEARCH_PROTOCOL.md` §5), a decision memo, a synthesis written up as a standalone document.
+
+Two things trigger a write to `outbox/`:
+- a research project reaching completion, exporting the Desired Outputs defined when its plan was made (`research/RESEARCH_PROTOCOL.md` §21);
+- an ad-hoc synthesis the human requests directly from Professor, outside any active project (`agents/professor/AGENTS.md` §3.D).
+
+`outbox/` content is a derived export, not the system of record — regenerate it from `knowledge/wiki/` rather than editing it in place if the underlying knowledge changes materially.
+
+## 15. Research Failure and Unknowns
 
 A research task may validly conclude:
 
@@ -363,7 +390,7 @@ Do not keep spawning Workers solely to avoid an unresolved result.
 
 When marginal research value becomes low, record the remaining uncertainty and move on.
 
-## 15. Communication With the Human
+## 16. Communication With the Human
 
 Use the configured communication channel, such as Slack, to request attention.
 
@@ -398,7 +425,7 @@ Do not let Slack or chat history become the only record of an important decision
 
 Record material decisions in the relevant research or knowledge files.
 
-## 16. Human Authority
+## 17. Human Authority
 
 The human owner has final authority over:
 - research objectives;
@@ -410,7 +437,7 @@ The human owner has final authority over:
 
 Do not conceal situations where the correct next step depends on human preference rather than evidence.
 
-## 17. Context Discipline
+## 18. Context Discipline
 
 Use the smallest context that can reliably solve the task.
 
@@ -435,7 +462,7 @@ all sources
 
 Inspect broader context only when the task requires it.
 
-## 18. Resource Discipline
+## 19. Resource Discipline
 
 Use the cheapest adequate resource.
 
@@ -467,7 +494,7 @@ Do not maximize activity.
 
 Maximize useful progress.
 
-## 19. Resumability
+## 20. Resumability
 
 At any meaningful stopping point, the filesystem should tell another competent agent:
 - what the project is trying to accomplish;
@@ -480,7 +507,7 @@ At any meaningful stopping point, the filesystem should tell another competent a
 
 If this is not true, improve the project files before stopping.
 
-## 20. Completion
+## 21. Completion
 
 A research project is not complete merely because all planned tasks ran.
 
@@ -490,13 +517,14 @@ Before marking it complete:
 3. identify unresolved questions;
 4. ensure important evidence is preserved;
 5. ensure relevant canonical knowledge is updated;
-6. ensure project state is understandable;
-7. record remaining uncertainty;
-8. notify the human owner.
+6. write applicable Desired Outputs (`research/RESEARCH_PROTOCOL.md` §5) to `outbox/`;
+7. ensure project state is understandable;
+8. record remaining uncertainty;
+9. notify the human owner.
 
 Do not hide unresolved issues merely to produce a clean completion state.
 
-## 21. Core Operating Loop
+## 22. Core Operating Loop
 
 For active research, repeatedly apply:
 

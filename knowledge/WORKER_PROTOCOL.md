@@ -22,14 +22,15 @@ The knowledge repository contains:
 
 ```text
 sources/     source records (citable provenance metadata)
-raw/         archived original material a source record points to
 proposals/   your output
 wiki/        canonical knowledge
 ```
 
+Archived original material a source record may point to lives in `raw_data/` at the repository root — a sibling of `knowledge/`, not a subdirectory of it.
+
 You may:
 
-- read assigned files from `sources/` and, when a task points you to one, its archived original in `raw/`;
+- read assigned files from `sources/` and, when a task points you to one, its archived original in `raw_data/`;
 - read relevant pages from `wiki/`;
 - search `wiki/` for existing related nodes;
 - write your results to `proposals/`.
