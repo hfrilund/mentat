@@ -1,0 +1,28 @@
+# Raw archived source material is kept locally only, not versioned —
+# these files can be large (PDFs, HTML dumps, datasets) and add no value
+# to Git history. Source *records* in knowledge/sources/ (markdown
+# metadata: title, URL, author, dates, path into raw/) ARE tracked,
+# so provenance stays inspectable even though the raw content does not.
+knowledge/raw/
+
+# OS / editor cruft
+.DS_Store
+.vscode/
+.idea/
+
+# Local environment / secrets — nothing here today, but guard against
+# accidental commits if tooling/ later needs local credentials.
+.env
+.env.*
+*.key
+
+# Logs and scratch output
+*.log
+tmp/
+*.tmp
+
+# Common tooling artifacts, in case tooling/ becomes Python or Node
+__pycache__/
+*.pyc
+.venv/
+node_modules/

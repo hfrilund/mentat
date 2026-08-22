@@ -47,13 +47,20 @@ knowledge/
 ├── KNOWLEDGE_PROTOCOL.md
 ├── WORKER_PROTOCOL.md
 ├── sources/
+├── raw/
 ├── proposals/
 └── wiki/
 ```
 
 ### `sources/`
 
-Contains external evidence or records pointing to external evidence.
+Contains source records: tracked, version-controlled Markdown describing external evidence — provenance metadata such as title, URL, author, publication and retrieval dates, source type, and, when an original is kept, its path into `raw/`.
+
+Source records are what canonical claims cite and link to.
+
+### `raw/`
+
+Contains the archived original material a source record points to.
 
 Examples:
 
@@ -65,9 +72,13 @@ Examples:
 - documents;
 - API responses;
 - human observations;
-- archived external material.
+- other archived external material.
 
-Agent-generated summaries, interpretations, or conclusions are **not sources**.
+`raw/` is not version-controlled (see `.gitignore`). It can be large, and it is not required for provenance — the source record in `sources/` already preserves the citable metadata. Treat `raw/` as a local cache, not the system of record.
+
+A raw file's name should match its source record's ID (e.g. `sources/S-000052.md` ↔ `raw/S-000052.pdf`), so the link between them is discoverable without parsing frontmatter.
+
+Agent-generated summaries, interpretations, or conclusions are **not sources**, whether in `sources/` or `raw/`.
 
 ### `proposals/`
 
@@ -262,7 +273,7 @@ Where practical, source records should preserve:
 - publication or observation date;
 - retrieval date;
 - source type;
-- local archive location when appropriate;
+- path to the archived original in `raw/`, when one is kept;
 - relevant page, section, timestamp, or excerpt reference;
 - known commercial or institutional relationship.
 

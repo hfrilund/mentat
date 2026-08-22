@@ -104,6 +104,7 @@ personal-intelligence/
 │   ├── KNOWLEDGE_PROTOCOL.md
 │   ├── WORKER_PROTOCOL.md
 │   ├── sources/
+│   ├── raw/
 │   ├── proposals/
 │   └── wiki/
 └── tooling/

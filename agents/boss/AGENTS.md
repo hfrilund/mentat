@@ -113,17 +113,7 @@ Track at minimum:
 - blockers;
 - completion state.
 
-Suggested statuses:
-
-```text
-planned
-ready
-in_progress
-blocked
-review
-complete
-cancelled
-```
+Work-package statuses are defined in `research/RESEARCH_PROTOCOL.md` §8 — use that list; do not maintain a separate one here.
 
 Do not mark a package complete merely because a Worker returned output.
 
@@ -270,6 +260,19 @@ superseded
 
 Do not manufacture certainty to make the wiki cleaner.
 
+### Allocating IDs
+
+Before creating a new canonical node, determine the next unused ID for its prefix (`E-`, `CON-`, `C-`, `Q-`, `SYN-`, per `knowledge/KNOWLEDGE_PROTOCOL.md` §5):
+
+1. list existing files under `knowledge/wiki/`, plus any pending `knowledge/proposals/`, matching the target prefix;
+2. take the highest existing number for that prefix;
+3. allocate the next sequential number;
+4. zero-pad to six digits, matching existing examples (e.g. `C-000184`).
+
+No deterministic tool performs this yet — `tooling/` (`SYSTEM_SPEC.md` §3, §21) is not built. Until one exists, this scan is Boss's responsibility. Do not guess an ID or reuse one without checking.
+
+If two agents ever allocate the same number for the same prefix, treat it as a duplicate per `knowledge/KNOWLEDGE_PROTOCOL.md` §12 rather than silently renumbering existing references.
+
 ## 11. When to Escalate to Professor
 
 Professor is an exception path, not a mandatory approval gate.
@@ -341,6 +344,8 @@ Important principles:
 - record uncertainty when source quality is weak.
 
 When a source is important to a conclusion, make it possible for the human owner to trace the conclusion back to that source.
+
+When adding a new source, allocate its `S-` ID using the same scan-and-increment procedure described in §10, checking `knowledge/sources/` for the highest existing `S-` number. Save the record as `sources/S-NNNNNN.md`; if archiving the original, save it as `raw/S-NNNNNN.<ext>` using the matching ID.
 
 ## 14. Research Failure and Unknowns
 

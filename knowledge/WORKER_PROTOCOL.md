@@ -21,14 +21,15 @@ Your job is to inspect the material assigned to you and produce a clear, evidenc
 The knowledge repository contains:
 
 ```text
-sources/     external evidence
+sources/     source records (citable provenance metadata)
+raw/         archived original material a source record points to
 proposals/   your output
 wiki/        canonical knowledge
 ```
 
 You may:
 
-- read assigned files from `sources/`;
+- read assigned files from `sources/` and, when a task points you to one, its archived original in `raw/`;
 - read relevant pages from `wiki/`;
 - search `wiki/` for existing related nodes;
 - write your results to `proposals/`.
