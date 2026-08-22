@@ -298,6 +298,8 @@ Do not produce excessive ceremonial prose.
 
 Focus on the epistemic decision.
 
+Save this as `reviews/REV-NN-decision.md` in the project directory, matching the request's number (`research/RESEARCH_PROTOCOL.md` §7). This is what makes a consequential judgment call inspectable afterward, not just its downstream effect on the wiki.
+
 ---
 
 ## 9. Escalation to the Human

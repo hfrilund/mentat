@@ -167,6 +167,8 @@ Prefer multiple narrow tasks over one vague task when doing so improves reliabil
 
 Avoid unnecessary decomposition when one bounded task is sufficient.
 
+Save each brief to `work/tasks/<WP-ID>-T<N>-brief.md` before dispatching the Worker (`research/RESEARCH_PROTOCOL.md` §11). Do not dispatch from an unsaved brief — if it's not on disk, a later debugging session can't tell what the Worker was actually told.
+
 ## 8. Worker Use
 
 Workers are ephemeral sub-agents.
@@ -311,7 +313,7 @@ When Professor review is warranted:
 2. prepare a bounded review packet;
 3. include only the relevant canonical nodes, proposals, evidence, contradictions, and context;
 4. explain why stronger review is warranted;
-5. save the review request to durable project files;
+5. save the review request as `reviews/REV-NN-request.md` in the project directory, numbering it sequentially within the project the same way work packages are numbered (`research/RESEARCH_PROTOCOL.md` §7);
 6. notify the human owner;
 7. wait for explicit authorization or manual Professor output.
 

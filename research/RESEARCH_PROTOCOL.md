@@ -45,12 +45,22 @@ research/
     └── finland-malta-ecommerce/
         ├── RESEARCH_PLAN.md
         ├── WORK_PLAN.md
-        └── work/
-            ├── WP-01-scenario-definition.md
-            ├── WP-02-vat-oss.md
-            ├── WP-03-consumer-law.md
+        ├── work/
+        │   ├── WP-01-scenario-definition.md
+        │   ├── WP-02-vat-oss.md
+        │   ├── WP-03-consumer-law.md
+        │   ├── ...
+        │   └── tasks/
+        │       ├── WP-02-T1-brief.md
+        │       ├── WP-02-T2-brief.md
+        │       └── ...
+        └── reviews/
+            ├── REV-01-request.md
+            ├── REV-01-decision.md
             └── ...
 ```
+
+`work/tasks/` and `reviews/` exist for debugging: see §11 and §7.
 
 When a project is complete or abandoned, move the whole directory to:
 
@@ -263,6 +273,8 @@ Professor should improve the research design, not perform the research itself du
 
 The human owner should approve major scope changes before large-scale execution begins.
 
+Save the review as a pair of files under the project's `reviews/` directory: the request (whoever raises it — Boss, or the human) as `REV-01-request.md`, and Professor's decision as `REV-01-decision.md`. Number `REV-` sequentially within the project, the same way work packages are numbered. This applies to any Professor review tied to this project, not just plan review — including ones invoked during execution (§18) — so a later debugging session can see not just what changed, but why a reviewer decided it, without depending on chat history (`SYSTEM_SPEC.md` §17).
+
 ---
 
 ## 8. Work Plan
@@ -427,6 +439,8 @@ Workers should not receive the entire Research Plan when a smaller self-containe
 
 Boss is responsible for compiling the context required for each Worker.
 
+Before dispatching a Worker, save its brief to `work/tasks/<WP-ID>-T<N>-brief.md` (e.g. `work/tasks/WP-02-T1-brief.md`). This is what lets a later debugging session verify what a Worker was actually told, rather than relying only on the Worker's own paraphrase of its task inside the resulting proposal — the two should independently agree. A proposal should cite the Task ID and brief path it was produced from (`knowledge/WORKER_PROTOCOL.md`).
+
 ---
 
 ## 12. Research Outputs and the Knowledge System
@@ -580,6 +594,8 @@ Professor should be invoked for bounded, high-value tasks such as:
 - determining what evidence could resolve an important dispute.
 
 Professor should receive a prepared, bounded review packet rather than an uncontrolled research backlog.
+
+Save the request and decision using the `reviews/` convention in §7.
 
 ---
 

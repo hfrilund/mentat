@@ -95,7 +95,7 @@ Use this general structure when appropriate:
 
 ## Task
 
-What you were asked to investigate.
+Task ID and brief path (e.g. `WP-02-T1`, `work/tasks/WP-02-T1-brief.md`), and what you were asked to investigate.
 
 ## Sources examined
 
