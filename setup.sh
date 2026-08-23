@@ -26,10 +26,22 @@
 # is deployment-specific — the same clone can live at a different
 # absolute path on a different machine — so it's gitignored, not
 # committed. Safe to re-run.
+#
+# Run this in the same filesystem context the agents themselves will see —
+# e.g. inside the OpenClaw container, if OpenClaw runs in Docker, not on
+# the host. A bind-mounted repository can sit at a different absolute path
+# on each side of that boundary; computing REPO_ROOT from the wrong side
+# silently produces a PROJECT_ROOT no agent can actually reach.
 
 set -euo pipefail
 
 REPO_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+
+echo "Repository root resolved to: $REPO_ROOT"
+echo "If this is not the path your agents will see (e.g. you're on the host"
+echo "of a Dockerized OpenClaw deployment instead of inside the container),"
+echo "stop and re-run this from inside the correct environment."
+echo
 
 mkdir -p "$REPO_ROOT/raw_data" "$REPO_ROOT/inbox" "$REPO_ROOT/outbox"
 

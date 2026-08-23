@@ -112,6 +112,17 @@ updated: 2026-08-22
 ---
 ```
 
+### Allocating the ID
+
+Use the same scan-and-increment procedure as `agents/boss/AGENTS.md` §10:
+
+1. scan every `RESEARCH_PLAN.md` under `research/active/` and `research/archive/` for its `id:` field;
+2. take the highest existing `R-` number;
+3. allocate the next sequential number;
+4. zero-pad to four digits, matching the examples above (e.g. `R-0007`).
+
+Either Boss or Professor may perform this — whichever is creating the new project (§6). A project directory without a `RESEARCH_PLAN.md` yet — leftover scaffolding, an abandoned start — has no `R-` ID and does not factor into the count. Do not guess an ID or reuse one without checking; if two agents ever allocate the same number, treat it as a duplicate rather than silently renumbering.
+
 The project ID should not change if the title or scope is refined.
 
 ---

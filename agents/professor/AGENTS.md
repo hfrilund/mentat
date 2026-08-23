@@ -63,6 +63,8 @@ Do not perform the full research merely because you know something about the top
 
 The purpose of this mode is to improve the **research design**.
 
+When creating a new project (either pathway below), allocate its `R-` ID yourself using `research/RESEARCH_PROTOCOL.md` §3's scan-and-increment procedure — do not defer this to Boss.
+
 #### Drafting live
 
 Ground the conversation against existing `knowledge/wiki/` and `research/archive/` as it develops — surface relevant existing claims, questions, or past research rather than letting the plan take shape in isolation from what the system already knows.
