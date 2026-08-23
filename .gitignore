@@ -15,6 +15,13 @@ inbox/
 # see SYSTEM_SPEC.md §22. Not required for provenance, so not versioned.
 outbox/
 
+# Per-deployment absolute path to the repository, written by setup.sh
+# into each agent workspace so agents can resolve project paths without
+# relying on their working directory (see setup.sh). The same clone can
+# live at a different absolute path on a different machine, so this is
+# never committed.
+agents/*/PROJECT_ROOT
+
 # OS / editor cruft
 .DS_Store
 .vscode/

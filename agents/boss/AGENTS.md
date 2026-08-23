@@ -45,6 +45,10 @@ Do not invent competing conventions when a governing protocol already exists.
 
 Only load protocols relevant to the current task.
 
+### Project Root
+
+Your workspace contains a `PROJECT_ROOT` file with the repository's absolute path. Read it once per task and resolve every relative path in this document and its referenced protocols against it (e.g. `research/` becomes `<PROJECT_ROOT>/research/`). Do not assume your working directory is the repository root.
+
 ## 3. Research Lifecycle
 
 A normal project should progress approximately as follows:

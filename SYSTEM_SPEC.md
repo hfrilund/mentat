@@ -128,6 +128,8 @@ tooling/     = HOW deterministic structure is checked or compiled
 
 `raw_data/`, `inbox/`, and `outbox/` sit outside `knowledge/` because none of them are knowledge: `raw_data/` is pre-evidence acquisition material a source record points to, `inbox/` is unprocessed intake, and `outbox/` is a derived export, not the system of record. See `knowledge/KNOWLEDGE_PROTOCOL.md` §2 for `raw_data/`; for `inbox/` and `outbox/`, the triggers are defined in `research/RESEARCH_PROTOCOL.md` §5, §6, and §21, with execution detail in `agents/boss/AGENTS.md` §14 and the ad-hoc synthesis path in `agents/professor/AGENTS.md` §3.D.
 
+Every path in this document and its referenced protocols is relative to the repository root shown above. Agents MUST NOT assume their own working directory is the repository root — how each agent learns the root is described in its own `AGENTS.md`.
+
 These responsibilities SHOULD remain distinct.
 
 ---

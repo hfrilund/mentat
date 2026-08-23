@@ -9,18 +9,27 @@
 # path an agent uses (research/, knowledge/, ...) would resolve against
 # its own agent directory instead of the repository.
 #
-# This script symlinks the repository-root directories into every
-# agent's workspace so relative paths resolve correctly regardless of
-# what OpenClaw sets as cwd. Safe to re-run.
+# Symlinking the repository root into each workspace (the previous
+# approach here) does not survive contact with OpenClaw's sandbox:
+# read/write tools reject a path that resolves outside the workspace
+# boundary, symlink or not — OpenClaw shipped a fix (2026.2.26) closing
+# exactly that escape route. Plain `../../` relative traversal hits the
+# same boundary for the same reason, so it isn't a viable fallback either.
+#
+# Instead, this script writes a PROJECT_ROOT file into each agent's own
+# workspace, containing the repository's absolute path. Reading a file
+# from inside your own workspace is never blocked by any sandbox
+# config, so this works regardless of sandboxing state. Each agent's
+# AGENTS.md instructs it to read this file once and resolve every
+# relative path in the governing protocols against it, rather than
+# assuming its working directory is the repository root. PROJECT_ROOT
+# is deployment-specific — the same clone can live at a different
+# absolute path on a different machine — so it's gitignored, not
+# committed. Safe to re-run.
 
 set -euo pipefail
 
 REPO_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-
-# Repository-root directories agent protocols reference by relative path.
-# raw_data/, inbox/, outbox/ are gitignored local-only directories, so a
-# fresh clone won't have them yet.
-ROOT_DIRS=(research knowledge raw_data inbox outbox tooling)
 
 mkdir -p "$REPO_ROOT/raw_data" "$REPO_ROOT/inbox" "$REPO_ROOT/outbox"
 
@@ -29,7 +38,7 @@ agent_dirs=("$REPO_ROOT"/agents/*/)
 shopt -u nullglob
 
 if [ ${#agent_dirs[@]} -eq 0 ]; then
-    echo "No agent directories found under agents/ — nothing to link." >&2
+    echo "No agent directories found under agents/ — nothing to do." >&2
     exit 0
 fi
 
@@ -37,22 +46,6 @@ for agent_dir in "${agent_dirs[@]}"; do
     agent_dir="${agent_dir%/}"
     agent_name="$(basename "$agent_dir")"
 
-    for name in "${ROOT_DIRS[@]}"; do
-        link="$agent_dir/$name"
-        target="../../$name"
-
-        if [ -L "$link" ]; then
-            current_target="$(readlink "$link")"
-            if [ "$current_target" = "$target" ]; then
-                echo "ok      agents/$agent_name/$name -> $target"
-            else
-                echo "skip    agents/$agent_name/$name already links elsewhere ($current_target) — not touching" >&2
-            fi
-        elif [ -e "$link" ]; then
-            echo "skip    agents/$agent_name/$name exists and is not a symlink — not touching" >&2
-        else
-            ln -s "$target" "$link"
-            echo "linked  agents/$agent_name/$name -> $target"
-        fi
-    done
+    printf '%s' "$REPO_ROOT" > "$agent_dir/PROJECT_ROOT"
+    echo "wrote   agents/$agent_name/PROJECT_ROOT -> $REPO_ROOT"
 done

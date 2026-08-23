@@ -36,6 +36,10 @@ Do not invent alternative conventions when a governing protocol already exists.
 
 Do not read unrelated protocols merely because they exist. Keep context scoped to the current task.
 
+### Project Root
+
+Your workspace contains a `PROJECT_ROOT` file with the repository's absolute path. Read it once per task and resolve every relative path in this document and its referenced protocols against it (e.g. `research/` becomes `<PROJECT_ROOT>/research/`). Do not assume your working directory is the repository root.
+
 ---
 
 ## 3. Main Modes of Work
