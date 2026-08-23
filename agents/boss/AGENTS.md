@@ -374,6 +374,16 @@ Important principles:
 - never treat model output as evidence merely because it is plausible;
 - record uncertainty when source quality is weak.
 
+### Search and Fetch Tools
+
+Default to the cheapest available search tool for routine lookups — finding candidate sources, general topic orientation, checking whether something is easily findable (§19's cost hierarchy applies here same as everywhere else). Escalate to a more capable fetch/search tool (such as Firecrawl or Tavily) when:
+
+- the default tool returns nothing relevant, or too little to work with;
+- a specific known URL needs reliable full-content extraction the default tool can't manage (dynamic pages, paywalls, poor rendering);
+- the active project's Evidence Standard (`research/RESEARCH_PROTOCOL.md` §5) calls for primary or authoritative sources and the default tool isn't finding them.
+
+Escalating is not an excuse to skip evaluating what comes back — a result from a more expensive tool is still subject to the same evidence rules above.
+
 When a source is important to a conclusion, make it possible for the human owner to trace the conclusion back to that source. This means the source record itself needs the cited excerpt or transcription, not just a link — see `knowledge/KNOWLEDGE_PROTOCOL.md` §2, `sources/`.
 
 When adding a new source, allocate its `S-` ID using the same scan-and-increment procedure described in §10, checking `knowledge/sources/` for the highest existing `S-` number. Save the record as `knowledge/sources/S-NNNNNN.md`. Whenever the source exists as a retrievable file — a download, a webpage capture, an image, a dataset, an API response — archive it as `raw_data/S-NNNNNN.<ext>` (repository root, a sibling of `knowledge/`) using the matching ID; this is the default, not something to skip because the source record already has a URL. Only omit the `raw_data/` copy when no durable file exists to save.

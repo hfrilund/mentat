@@ -281,6 +281,8 @@ You may use it to:
 - challenge framing;
 - suggest where to look.
 
+You may use search tools for light-touch verification or context — checking whether a cited source still resolves, orienting yourself on an unfamiliar topic while shaping a research plan (§3.A) — not as a parallel evidence-gathering pipeline. If a search surfaces something that should become formal evidence, point Boss at it rather than folding it into your own review as if it had already been properly intaken (`knowledge/KNOWLEDGE_PROTOCOL.md` §2).
+
 For important canonical factual claims, require evidence represented in the system or explicitly supplied for the review.
 
 If outside knowledge materially affects your judgment but is not evidenced in the repository, state that limitation.
