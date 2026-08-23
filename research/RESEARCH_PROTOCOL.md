@@ -446,7 +446,7 @@ Boss is responsible for compiling the context required for each Worker.
 
 Before dispatching a Worker, save its brief to `work/tasks/<WP-ID>-T<N>-brief.md` (e.g. `work/tasks/WP-02-T1-brief.md`). This is what lets a later debugging session verify what a Worker was actually told, rather than relying only on the Worker's own paraphrase of its task inside the resulting proposal — the two should independently agree. A proposal should cite the Task ID and brief path it was produced from (`knowledge/WORKER_PROTOCOL.md`).
 
-Intern sub-briefs (`knowledge/WORKER_PROTOCOL.md`) follow the same convention one level down — `work/tasks/<WP-ID>-T<N>-I<M>-brief.md` — but are not work packages and do not get their own `WP-` ID; they are a further narrowing of a single Worker task, compiled either by Boss (above) or by Worker itself when it discovers unanticipated batchable structure.
+Intern sub-briefs (`knowledge/WORKER_PROTOCOL.md`) follow the same convention one level down — `work/tasks/<WP-ID>-T<N>-I<M>-brief.md` — but are not work packages and do not get their own `WP-` ID; they are a further narrowing of a single Worker task, compiled and dispatched by Boss, with the resolved results folded into the Worker brief.
 
 ---
 

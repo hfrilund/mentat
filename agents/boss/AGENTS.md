@@ -173,7 +173,17 @@ Prefer multiple narrow tasks over one vague task when doing so improves reliabil
 
 Avoid unnecessary decomposition when one bounded task is sufficient.
 
-If part of a Worker's task reduces to a single elementary judgment (classify, extract, yes/no/unclear) repeated independently across several items, pre-compile it as one or more Intern sub-briefs and include them in the Worker brief, rather than leaving Worker to decide whether delegation is worthwhile. That decision belongs here, at compilation time — Worker should not be asked to judge suitability for delegation itself (`knowledge/WORKER_PROTOCOL.md`).
+If part of a Worker's task reduces to a single elementary judgment (classify, extract, yes/no/unclear) repeated independently across several items, do not leave Worker to decide whether delegation is worthwhile — dispatch it to Intern yourself and fold the resolved results into the Worker brief as ordinary input.
+
+### Delegating to Intern
+
+An Intern sub-brief must specify the exact question, the exact input inlined in full (Intern cannot look anything up), and the exact output shape expected. Save each one before dispatch as `work/tasks/<WP-ID>-T<N>-I<M>-brief.md` (`research/RESEARCH_PROTOCOL.md` §11).
+
+`unclear` is a valid, complete answer — Intern found insufficient support and said so rather than guessing. Record it as-is; do not retry it or substitute your own guess.
+
+A response that doesn't answer the question — wrong format, off-topic, doesn't match the requested shape — is a failure, not an answer: resend the identical sub-brief once; if it still doesn't match, stop retrying and resolve that item yourself. Never let a bad Intern response silently drop an item or reach Worker unresolved.
+
+When you fold a result into the Worker brief, cite the Intern sub-brief path next to it, and tell Worker to carry that citation into its own proposal (`knowledge/WORKER_PROTOCOL.md`) — this is what lets a reviewer see where an extra hop of unreliable judgment sits behind a specific finding.
 
 Save each brief to `work/tasks/<WP-ID>-T<N>-brief.md` before dispatching the Worker (`research/RESEARCH_PROTOCOL.md` §11). Do not dispatch from an unsaved brief — if it's not on disk, a later debugging session can't tell what the Worker was actually told.
 

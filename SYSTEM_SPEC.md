@@ -160,7 +160,7 @@ Workers are ephemeral execution agents.
 
 They SHOULD be cheap and replaceable.
 
-A Worker MAY further narrow part of its own task into one or more tool-free, single-judgment sub-tasks and dispatch them to Intern, an even cheaper ephemeral executor with no tools and no access beyond what it is given (`knowledge/WORKER_PROTOCOL.md`). This narrowing is normally decided at task-compilation time (§16), not by Worker itself — Worker SHOULD NOT be asked to judge suitability for delegation, only to recognize it in the narrow case where a brief did not anticipate it. Intern does not create a new authority level: its output is treated exactly like a Worker's own conclusions — not automatically correct, not canonical.
+Boss MAY narrow part of a Worker's task into one or more tool-free, single-judgment sub-tasks and dispatch them directly to Intern, an even cheaper ephemeral executor with no tools and no access beyond what it is given (`knowledge/WORKER_PROTOCOL.md`), folding the results into the Worker brief as ordinary pre-gathered input. Worker never dispatches Intern itself and is not asked to judge suitability for delegation — that judgment belongs entirely to task compilation (§16). Intern does not create a new authority level: its output is treated exactly like a Worker's own conclusions — not automatically correct, not canonical.
 
 They are intended for bounded tasks such as:
 
