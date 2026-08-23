@@ -239,20 +239,30 @@ What must be true before the research can reasonably be considered complete?
 
 ## 6. Creating the Research Plan
 
-The human should normally create the first research plan through an exploratory conversation with the strongest suitable model available.
-
 The purpose of this phase is to improve the **research question**, not to prematurely answer it.
 
-The model should help identify:
+A research plan can originate through either of two pathways, both producing the same `RESEARCH_PLAN.md`.
+
+### A. Direct conversation with Professor
+
+The human works through the idea directly with Professor (`agents/professor/AGENTS.md` §3.A), which should help identify:
 
 - missing dimensions;
 - hidden assumptions;
 - dependencies;
 - important subquestions;
 - evidence requirements;
-- potentially dangerous simplifications.
+- potentially dangerous simplifications;
 
-If the human already has material this research needs — something not findable online, or already curated enough that re-researching it would be wasted effort — this planning conversation is the point to hand it over: drop it in `inbox/` (repository root). Once the plan is approved, Boss triages `inbox/` contents the same way any other source is triaged (`knowledge/KNOWLEDGE_PROTOCOL.md` §2) before work packages begin, so it enters the evidence chain rather than sitting outside it.
+grounding the discussion against existing `knowledge/wiki/` and `research/archive/` as it develops, so the plan doesn't duplicate or ignore what the system already knows.
+
+### B. External draft
+
+The human may instead work the idea through elsewhere — with another model, on paper, in conversation — and save the result as `inbox/RESEARCH_PLAN-<slug>.md`. The draft does not need to already match this section's structure; Professor's job on picking it up is to formalize it, checking it against existing knowledge the same way as pathway A, not merely transcribe it. Before removing the draft from `inbox/`, fold anything worth preserving into the new project rather than discarding it.
+
+Pathway B has a structural advantage: because Professor was not part of the original drafting, its formalization pass is automatically independent. Pathway A doesn't get this for free — the later review (§7) should deliberately happen as a fresh pass, not a continuation of the drafting conversation, or it loses most of its value as a check.
+
+If the human already has material this research needs — something not findable online, or already curated enough that re-researching it would be wasted effort — hand it over the same way: drop it in `inbox/` (repository root), without the `RESEARCH_PLAN-` prefix, which is reserved for draft plans (`agents/boss/AGENTS.md` §14). Once the plan is approved, Boss triages that `inbox/` material the same way any other source is triaged (`knowledge/KNOWLEDGE_PROTOCOL.md` §2) before work packages begin, so it enters the evidence chain rather than sitting outside it.
 
 The resulting plan is saved as `RESEARCH_PLAN.md`.
 

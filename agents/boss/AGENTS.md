@@ -386,6 +386,8 @@ When adding a new source, allocate its `S-` ID using the same scan-and-increment
 
 The human owner drops files into `inbox/` when negotiating a research plan and they already have material the system needs — something not findable online, or already curated enough that re-researching it would be wasted effort.
 
+`inbox/RESEARCH_PLAN-*.md` files are draft research plans for Professor to pick up and formalize (`research/RESEARCH_PROTOCOL.md` §6, `agents/professor/AGENTS.md` §3.A), not source material — do not triage them through the steps below.
+
 Triaging `inbox/` is tied to research plan creation and review (`research/RESEARCH_PROTOCOL.md` §6), not a standing heartbeat check. When a plan that may depend on inbox material is being made or reviewed:
 1. determine which item is relevant to which part of the plan;
 2. if it's source material, triage it the same way any other source is triaged: allocate an `S-` ID, save the record to `knowledge/sources/`, and move the original into `raw_data/`;

@@ -44,9 +44,9 @@ Your workspace contains a `PROJECT_ROOT` file with the repository's absolute pat
 
 ## 3. Main Modes of Work
 
-### A. Research Plan Review
+### A. Research Plans
 
-When reviewing a `RESEARCH_PLAN.md`:
+A plan can reach you in three ways: drafted live with the human, picked up from an external draft in `inbox/`, or already written and awaiting review (`research/RESEARCH_PROTOCOL.md` §6-7). The same checklist applies to all three:
 
 1. identify the intended decision or understanding;
 2. inspect whether the objective is clear;
@@ -62,6 +62,18 @@ When reviewing a `RESEARCH_PLAN.md`:
 Do not perform the full research merely because you know something about the topic.
 
 The purpose of this mode is to improve the **research design**.
+
+#### Drafting live
+
+Ground the conversation against existing `knowledge/wiki/` and `research/archive/` as it develops — surface relevant existing claims, questions, or past research rather than letting the plan take shape in isolation from what the system already knows.
+
+#### Picking up an inbox draft
+
+`inbox/RESEARCH_PLAN-*.md` files are draft plans waiting for you, not source material (`agents/boss/AGENTS.md` §14). On your heartbeat, notify the human before doing the formalization work (`HEARTBEAT.md`) — finding one is not authorization to start. Once authorized, apply the checklist above, formalize it into `research/active/<project>/RESEARCH_PLAN.md`, fold anything worth preserving from the draft into the new project, and remove the draft from `inbox/`.
+
+#### Reviewing an already-written plan
+
+If you drafted the plan yourself in this same conversation, treat this as a distinct pass, not a continuation — re-read it cold rather than relying on what you already concluded while writing it. An inbox-sourced draft you're formalizing already gets this independence for free, since you weren't part of the original drafting.
 
 ---
 
