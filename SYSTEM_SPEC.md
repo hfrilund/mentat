@@ -97,7 +97,9 @@ personal-intelligence/
 ├── raw_data/
 ├── agents/
 │   ├── boss/
-│   └── professor/
+│   ├── professor/
+│   ├── worker/
+│   └── intern/
 ├── research/
 │   ├── RESEARCH_PROTOCOL.md
 │   ├── active/
@@ -155,6 +157,8 @@ It describes increasing judgment, cost, and authority.
 Workers are ephemeral execution agents.
 
 They SHOULD be cheap and replaceable.
+
+A Worker MAY further narrow part of its own task into one or more tool-free, single-judgment sub-tasks and dispatch them to Intern, an even cheaper ephemeral executor with no tools and no access beyond what it is given (`knowledge/WORKER_PROTOCOL.md`). This narrowing is normally decided at task-compilation time (§16), not by Worker itself — Worker SHOULD NOT be asked to judge suitability for delegation, only to recognize it in the narrow case where a brief did not anticipate it. Intern does not create a new authority level: its output is treated exactly like a Worker's own conclusions — not automatically correct, not canonical.
 
 They are intended for bounded tasks such as:
 
@@ -247,6 +251,8 @@ Professor is NOT required to review every Worker proposal or every Boss edit.
 Professor SHOULD work on bounded review packets rather than entire repositories or historical backlogs.
 
 By default, Professor invocation SHOULD require human approval before expensive frontier-model resources are consumed.
+
+Professor runs continuously rather than being started per-session, so this approval MUST be an explicit event Professor waits for, not an assumption implied by how Professor happens to be started. Professor MUST relay a pending review request to the human and MUST NOT begin the review itself until the human explicitly authorizes it, and MUST record that authorization in the review request file once given (`agents/professor/AGENTS.md` §13).
 
 Professor's own model knowledge MUST NOT automatically be treated as evidence.
 
@@ -596,9 +602,11 @@ If an important decision occurs through Slack or conversation, it SHOULD be refl
 
 # 18. Communication Model
 
-Boss may reach the human owner proactively through a configured communication channel such as Slack.
+Professor holds the configured communication channel to the human owner, such as Slack, while the system is running.
 
-Boss SHOULD notify the human when:
+Boss does not message the human directly. Boss determines when human attention is warranted and leaves a durable notification record for Professor to relay (`agents/boss/AGENTS.md` §16).
+
+Boss SHOULD leave a notification when:
 
 - a meaningful decision is required;
 - research is materially blocked;
@@ -608,7 +616,7 @@ Boss SHOULD notify the human when:
 - a consequential failure occurs;
 - a project completes.
 
-Boss SHOULD NOT notify merely because:
+Boss SHOULD NOT leave a notification merely because:
 
 - a routine Worker completed;
 - a normal source was added;
@@ -616,11 +624,15 @@ Boss SHOULD NOT notify merely because:
 - nothing changed;
 - no human action is needed.
 
+Professor relays pending notifications to the human and relays the human's replies back into the relevant durable file (`agents/professor/AGENTS.md` §13) — the file that changed, not the conversation, remains authoritative (§17).
+
 Communication SHOULD be concise and actionable.
 
 ---
 
 # 19. Heartbeat Model
+
+This section describes Boss's heartbeat. Professor's heartbeat is analogous in spirit — resume authorized work, surface what needs attention, stay quiet otherwise — but is scoped to relaying communication and continuing already-authorized review work rather than research execution; see `agents/professor/HEARTBEAT.md`.
 
 Heartbeats exist to resume useful work and surface attention-worthy events.
 
@@ -632,7 +644,7 @@ A heartbeat SHOULD:
 - identify ready or blocked work;
 - detect completed delegated work;
 - continue authorized routine work when useful;
-- notify the human only when warranted.
+- leave a notification for Professor only when warranted (§18).
 
 A heartbeat MUST NOT:
 
@@ -754,6 +766,13 @@ agents/boss/
 agents/professor/
     IDENTITY.md
     SOUL.md
+    AGENTS.md
+    HEARTBEAT.md
+
+agents/worker/
+    AGENTS.md
+
+agents/intern/
     AGENTS.md
 
 research/
@@ -884,6 +903,11 @@ agents/boss/HEARTBEAT.md
 agents/professor/IDENTITY.md
 agents/professor/SOUL.md
 agents/professor/AGENTS.md
+agents/professor/HEARTBEAT.md
+
+agents/worker/AGENTS.md
+
+agents/intern/AGENTS.md
 
 research/RESEARCH_PROTOCOL.md
 
@@ -924,7 +948,7 @@ A concept may be specified but not operationally implemented.
 
 Examples:
 
-- Boss is supposed to notify the human but no heartbeat or communication behavior exists;
+- Boss is supposed to leave a notification for Professor but no heartbeat or notification behavior exists;
 - Professor review is required but no review-packet mechanism is defined;
 - research must be resumable but work-plan files lack status conventions;
 - evidence must be traceable but source IDs are not specified.

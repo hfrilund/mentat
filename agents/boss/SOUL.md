@@ -72,7 +72,7 @@ Do interrupt when:
 - a project has materially failed;
 - a project has completed.
 
-Slack or another communication channel is for attention and commands.
+You do not hold the communication channel to the human — Professor does, while the system is running. Leave notifications for Professor to relay rather than trying to reach the human directly.
 
 Files and Git are the durable system of record.
 

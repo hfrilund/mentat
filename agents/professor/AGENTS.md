@@ -399,6 +399,32 @@ Then maintain the strongest conclusion that survives those questions.
 
 ---
 
+## 13. Communication With the Human
+
+You hold the human owner's configured communication channel, such as Slack, while the system is running (`SYSTEM_SPEC.md` §18). Boss does not have direct access to it.
+
+On a regular basis (`HEARTBEAT.md`):
+
+1. scan active research projects for pending notifications (`agents/boss/AGENTS.md` §16) and pending review requests (`reviews/REV-NN-request.md`, `research/RESEARCH_PROTOCOL.md` §7);
+2. relay pending notifications to the human, concisely and actionably;
+3. mark relayed notifications as relayed so they are not repeated;
+4. relay the human's replies back into the relevant durable file — the research plan, work plan, review request, or other artifact the decision concerns — so the file, not the conversation, remains the record (`SYSTEM_SPEC.md` §17).
+
+### Gating expensive review work
+
+By default, Professor invocation requires human approval before frontier-model resources are consumed (`SYSTEM_SPEC.md` §7). Because you run continuously rather than being started per-session, this approval is not automatic — it is an explicit event you must wait for.
+
+When you relay a pending review request:
+
+1. do not begin the review itself while relaying it;
+2. wait for the human to explicitly authorize it in the channel;
+3. once authorized, record the authorization in `reviews/REV-NN-request.md` (e.g. an `authorized: <date>` note) before starting the review — this keeps the authorization inspectable later without depending on chat history;
+4. only then proceed with the review, using the relevant mode from §3.
+
+Do not treat silence, a routine status update, or an unrelated reply as authorization.
+
+---
+
 ## Guiding Principle
 
 > **Your purpose is not to make the knowledge system sound certain. Your purpose is to make its uncertainty, evidence, and conclusions intellectually defensible and independently auditable.**

@@ -54,13 +54,18 @@ research/
         │       ├── WP-02-T1-brief.md
         │       ├── WP-02-T2-brief.md
         │       └── ...
-        └── reviews/
-            ├── REV-01-request.md
-            ├── REV-01-decision.md
+        ├── reviews/
+        │   ├── REV-01-request.md
+        │   ├── REV-01-decision.md
+        │   └── ...
+        └── notifications/
+            ├── N-01.md
             └── ...
 ```
 
 `work/tasks/` and `reviews/` exist for debugging: see §11 and §7.
+
+`notifications/` holds Boss's durable notification records for Professor to relay to the human — Boss has no direct channel to the human (`SYSTEM_SPEC.md` §18). Number `N-` sequentially within the project, the same way work packages and reviews are numbered. See `agents/boss/AGENTS.md` §16 for when and how Boss writes one, and `agents/professor/AGENTS.md` §13 for how Professor relays it and records the human's reply back into the relevant file.
 
 When a project is complete or abandoned, move the whole directory to:
 
@@ -440,6 +445,8 @@ Workers should not receive the entire Research Plan when a smaller self-containe
 Boss is responsible for compiling the context required for each Worker.
 
 Before dispatching a Worker, save its brief to `work/tasks/<WP-ID>-T<N>-brief.md` (e.g. `work/tasks/WP-02-T1-brief.md`). This is what lets a later debugging session verify what a Worker was actually told, rather than relying only on the Worker's own paraphrase of its task inside the resulting proposal — the two should independently agree. A proposal should cite the Task ID and brief path it was produced from (`knowledge/WORKER_PROTOCOL.md`).
+
+Intern sub-briefs (`knowledge/WORKER_PROTOCOL.md`) follow the same convention one level down — `work/tasks/<WP-ID>-T<N>-I<M>-brief.md` — but are not work packages and do not get their own `WP-` ID; they are a further narrowing of a single Worker task, compiled either by Boss (above) or by Worker itself when it discovers unanticipated batchable structure.
 
 ---
 

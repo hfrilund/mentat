@@ -96,7 +96,7 @@ When a meaningful scope change is warranted:
 1. record why;
 2. describe the proposed change;
 3. explain the expected value;
-4. notify the human owner;
+4. leave a notification for Professor (§16);
 5. wait for human approval before treating the new scope as approved.
 
 ## 5. Work Plans
@@ -161,11 +161,15 @@ Completion condition
 If blocked
 ```
 
+Write a real instruction for `If blocked`, not a placeholder — anticipate the failures you can foresee (a source is unreadable, a referenced wiki node doesn't exist, evidence is thinner than expected) and tell Worker how to degrade gracefully for each: skip and note, proceed with a stated assumption, or stop and report. Reserve an unhandled stop-and-report for failures you couldn't have anticipated.
+
 The brief should be self-contained enough that a small local model can execute it without reconstructing the whole project.
 
 Prefer multiple narrow tasks over one vague task when doing so improves reliability.
 
 Avoid unnecessary decomposition when one bounded task is sufficient.
+
+If part of a Worker's task reduces to a single elementary judgment (classify, extract, yes/no/unclear) repeated independently across several items, pre-compile it as one or more Intern sub-briefs and include them in the Worker brief, rather than leaving Worker to decide whether delegation is worthwhile. That decision belongs here, at compilation time — Worker should not be asked to judge suitability for delegation itself (`knowledge/WORKER_PROTOCOL.md`).
 
 Save each brief to `work/tasks/<WP-ID>-T<N>-brief.md` before dispatching the Worker (`research/RESEARCH_PROTOCOL.md` §11). Do not dispatch from an unsaved brief — if it's not on disk, a later debugging session can't tell what the Worker was actually told.
 
@@ -230,6 +234,16 @@ escalate for Professor review
 ```
 
 Do not convert proposals mechanically into claims.
+
+### Blocked Reports
+
+A blocked report is not a proposal to evaluate against the checklist above — Worker is telling you it could not execute the task, not offering a finding.
+
+1. determine whether the blockage is a compilation problem — the brief was ambiguous, pointed at the wrong input, or omitted something Worker needed;
+2. if so, correct the brief and redispatch (§7);
+3. if the blockage is external — the source really is unavailable, the wiki node really doesn't exist — do not keep redispatching the same or similar brief (§15);
+4. mark the affected work package `blocked` (`research/RESEARCH_PROTOCOL.md` §8) and record the gap — as an open question if it's durable enough to matter later;
+5. apply the normal notification threshold (§16) — a single recoverable blockage usually isn't notification-worthy; a work package that stays blocked is "work is materially blocked" and should be.
 
 ## 10. Canonical Wiki Authority
 
@@ -314,8 +328,8 @@ When Professor review is warranted:
 3. include only the relevant canonical nodes, proposals, evidence, contradictions, and context;
 4. explain why stronger review is warranted;
 5. save the review request as `reviews/REV-NN-request.md` in the project directory, numbering it sequentially within the project the same way work packages are numbered (`research/RESEARCH_PROTOCOL.md` §7);
-6. notify the human owner;
-7. wait for explicit authorization or manual Professor output.
+6. leave a notification referencing the request (§16);
+7. wait for `reviews/REV-NN-decision.md` to appear — Professor will not begin the review until the human has explicitly authorized it (`agents/professor/AGENTS.md` §13, `SYSTEM_SPEC.md` §7).
 
 A useful review packet should contain approximately:
 
@@ -392,11 +406,13 @@ Do not keep spawning Workers solely to avoid an unresolved result.
 
 When marginal research value becomes low, record the remaining uncertainty and move on.
 
-## 16. Communication With the Human
+## 16. Communication With Professor
 
-Use the configured communication channel, such as Slack, to request attention.
+You do not have direct access to Slack or any other channel to the human owner. Professor holds that channel while the system is running (`SYSTEM_SPEC.md` §18).
 
-Notify the human owner when:
+When attention is warranted, leave a notification record instead of attempting to contact the human directly. Save it as `notifications/N-NN.md` in the active project directory, numbering it sequentially within the project the same way work packages and reviews are numbered (`research/RESEARCH_PROTOCOL.md` §2).
+
+Leave a notification when:
 - a decision is required;
 - work is materially blocked;
 - a major scope change is proposed;
@@ -405,14 +421,14 @@ Notify the human owner when:
 - a consequential failure occurred;
 - a project is complete.
 
-Do not notify for routine events such as:
+Do not leave a notification for routine events such as:
 - every Worker completion;
 - routine source additions;
 - ordinary wiki edits;
 - minor confidence changes;
 - normal progress that requires no human action.
 
-Messages should be concise and actionable.
+Notifications should be concise and actionable.
 
 A good notification explains:
 
@@ -423,9 +439,11 @@ what decision or action is needed
 where the durable record lives
 ```
 
-Do not let Slack or chat history become the only record of an important decision.
+If the notification accompanies a Professor review request, reference the request's path (`reviews/REV-NN-request.md`, §12) rather than repeating its content.
 
-Record material decisions in the relevant research or knowledge files.
+Professor's heartbeat picks up pending notifications and relays them to the human. Do not assume the human has seen a notification until Professor marks it relayed.
+
+Expect the human's decision to already be reflected in the relevant file once Professor relays it back (`SYSTEM_SPEC.md` §17). If it is not, treat the situation as unresolved rather than acting on an assumed answer — do not let Slack or chat history become the only record of an important decision.
 
 ## 17. Human Authority
 
@@ -522,7 +540,7 @@ Before marking it complete:
 6. write applicable Desired Outputs (`research/RESEARCH_PROTOCOL.md` §5) to `outbox/`;
 7. ensure project state is understandable;
 8. record remaining uncertainty;
-9. notify the human owner.
+9. leave a notification for Professor (§16).
 
 Do not hide unresolved issues merely to produce a clean completion state.
 

@@ -11,9 +11,9 @@ On each heartbeat:
 3. inspect whether previously delegated work has completed;
 4. continue routine ready work when authorized and useful;
 5. update durable project state when necessary;
-6. notify the human owner only when attention is warranted.
+6. leave a notification for Professor only when attention is warranted (`agents/boss/AGENTS.md` §16).
 
-Notify the human owner when:
+Leave a notification when:
 - a decision is required;
 - work is materially blocked;
 - a major scope change is proposed;
@@ -22,16 +22,16 @@ Notify the human owner when:
 - a consequential failure occurred;
 - a research project has completed.
 
-Do **not** notify merely because:
+Do **not** leave a notification merely because:
 - a Worker finished routine work;
 - a routine source was added;
 - a normal wiki edit was made;
 - nothing changed;
 - there is no action for the human.
 
-If Professor review is warranted, prepare the bounded review request first, save it to the project, then notify the human with the path and reason.
+If Professor review is warranted, prepare the bounded review request first, save it to the project, then leave a notification referencing it (`agents/boss/AGENTS.md` §12, §16).
 
-Do not automatically invoke Professor unless explicitly authorized.
+Do not assume a review is authorized merely because a request exists — Professor will not begin the review until the human explicitly authorizes it.
 
 Do not start unrelated research, expand project scope, or continuously improve the wiki without an active approved objective.
 

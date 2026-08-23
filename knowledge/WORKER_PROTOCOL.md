@@ -1,7 +1,7 @@
 # Worker Protocol
 
 **Version:** 0.1  
-**Audience:** Ephemeral local-model workers  
+**Audience:** Ephemeral Workers  
 **Purpose:** Define the minimum rules for producing useful, auditable research proposals.
 
 ---
@@ -70,6 +70,8 @@ Do not pretend certainty.
 
 If evidence is missing, say what additional evidence would help.
 
+These describe a **finding** — the evidence didn't clearly answer the question, and that's a normal completed outcome. This is different from being **blocked** (see Completion) — blocked means you could not execute the task at all, not that the evidence was thin.
+
 ---
 
 ## Wiki Rules
@@ -81,6 +83,41 @@ Before proposing a new canonical node:
 3. prefer proposing an update or link to an existing node over creating a duplicate.
 
 Use existing wiki node names and links where practical.
+
+---
+
+## Delegating to Intern
+
+Intern is a tool-free, single-use judgment executor you may dispatch for narrow, fully-specified sub-questions — never for investigation, search, or multi-step reasoning.
+
+Two ways Intern gets used:
+
+1. **Pre-compiled by Boss.** Your task brief may already include one or more ready-made Intern sub-briefs. Dispatch these as given — the decision to use Intern was already made when the brief was compiled.
+2. **Discovered by you.** If, while executing your task, you find yourself about to make the exact same one-line judgment independently against five or more items your brief didn't anticipate, you may compile Intern sub-briefs yourself instead of deciding each one inline. Use this only for a single elementary judgment per item (classify, extract, yes/no/unclear) — never for anything requiring you to decide what's relevant first.
+
+An Intern sub-brief must specify:
+
+- the exact question;
+- the exact input, inlined in full — Intern cannot look anything up;
+- the exact output shape expected.
+
+Save each Intern sub-brief before dispatch as `work/tasks/<WP-ID>-T<N>-I<M>-brief.md` (`research/RESEARCH_PROTOCOL.md` §11), the same convention used for your own brief.
+
+Intern has no tools and cannot write `proposals/` itself — you receive its response and are responsible for it. Treat an Intern response exactly as a Worker's own conclusion is treated by Boss: not automatically correct. Verify it makes sense before it enters your proposal.
+
+### Handling Intern responses
+
+`unclear` is a valid, complete answer — Intern found insufficient support and said so rather than guessing. Do not retry it and do not substitute your own guess; record it as-is. That an item was checked and came back unclear is itself useful evidence.
+
+A response that doesn't answer the question — wrong format, off-topic, doesn't match the requested output shape — is a failure, not an answer:
+
+1. check the response against the exact output shape the sub-brief requested;
+2. if it doesn't match, resend the identical sub-brief once;
+3. if it still doesn't match, stop retrying and answer that one item yourself instead. Never let a bad Intern response silently drop an item or block the rest of your task.
+
+### Citing Intern in your proposal
+
+Mark any finding that came from Intern rather than your own reading, citing the sub-brief path (e.g. `work/tasks/WP-02-T1-I3-brief.md`) next to it. This lets a reviewer see where an extra hop of unreliable judgment sits behind a specific finding, the same way a source citation shows where a fact came from.
 
 ---
 
@@ -104,7 +141,7 @@ Task ID and brief path (e.g. `WP-02-T1`, `work/tasks/WP-02-T1-brief.md`), and wh
 
 ## Findings
 
-What the evidence directly supports.
+What the evidence directly supports. Cite the Intern sub-brief path next to any finding that came from Intern rather than your own reading (see "Delegating to Intern" above).
 
 ## Candidate interpretation
 
@@ -179,6 +216,26 @@ When finished:
 2. report the file path;
 3. briefly state whether the task was completed, partially completed, or blocked;
 4. identify any important missing evidence.
+
+### Blocked tasks
+
+Blocked means you could not execute the task as given — a required input is missing or unreadable, a referenced source or wiki node doesn't exist, or the brief is contradictory or incomplete. It does not mean the evidence was thin or the answer unclear — that's a normal finding (see Uncertainty Rules), not a block.
+
+If your brief's `If blocked` instruction covers the specific problem you hit, follow it and continue — do not treat every obstacle as a full stop.
+
+If it doesn't, still write to your designated output path, using this minimal shape instead of the full proposal template:
+
+```markdown
+# Blocked: <Task ID>
+
+## What was attempted
+
+## What's blocking completion
+
+## What was completed, if anything
+```
+
+Do not silently return nothing. A blocked report is a valid, useful result.
 
 ---
 
